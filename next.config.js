@@ -1,12 +1,18 @@
-const path = require("path");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
     dirs: ["src"],
   },
-  sassOptions: {
-    includePaths: [path.join(__dirname, "src/styles")],
-    prependData: `@import "variables.scss"; @import "media.scss";`,
+  compiler: {
+    styledComponents: true,
+  },
+  webpack: (config, options) => {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ["@svgr/webpack"],
+    });
+
+    return config;
   },
 };
 
